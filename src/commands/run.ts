@@ -39,7 +39,7 @@ export default class RunCommand extends Command {
     private inputParser = new InputStringHandler(this.engine);
 
     async run(): Promise<void> {
-        const { args, flags } = await this.parse(RobotSimCommand);
+        const { args, flags } = await this.parse(RunCommand);
 
         let inputStream: Readable;
         if (flags.stdin) {
