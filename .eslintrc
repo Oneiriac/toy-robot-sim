@@ -1,0 +1,12 @@
+{
+    "extends": ["airbnb-base", "airbnb-typescript/base", "prettier"],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "no-console": "error",
+        "@typescript-eslint/switch-exhaustiveness-check": "warn",
+        "default-case": "off",
+        "consistent-return": "off"
+    }
+}

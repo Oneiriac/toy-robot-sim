@@ -6,6 +6,27 @@ export interface PositionProps {
     direction: Direction;
 }
 
+const validatePosition = (position: PositionProps): void | never => {
+    const validationErrors = [];
+    if (position.x < 0) {
+        validationErrors.push("x cannot be < 0");
+    } else if (position.x > 4) {
+        validationErrors.push("x cannot be > 4");
+    }
+
+    if (position.y < 0) {
+        validationErrors.push("y cannot be < 0");
+    } else if (position.y > 4) {
+        validationErrors.push("y cannot be > 4");
+    }
+
+    if (validationErrors.length === 0) {
+        return;
+    }
+
+    throw new Error(`Illegal state: ${validationErrors.join(", ")}`);
+};
+
 export class Position implements PositionProps {
     readonly x: number;
 
@@ -63,24 +84,3 @@ export class Position implements PositionProps {
         return Object.assign(this, { direction: value });
     }
 }
-
-const validatePosition = (position: PositionProps): void | never => {
-    const validationErrors = [];
-    if (position.x < 0) {
-        validationErrors.push("x cannot be < 0");
-    } else if (position.x > 4) {
-        validationErrors.push("x cannot be > 4");
-    }
-
-    if (position.y < 0) {
-        validationErrors.push("y cannot be < 0");
-    } else if (position.y > 4) {
-        validationErrors.push("y cannot be > 4");
-    }
-
-    if (validationErrors.length === 0) {
-        return;
-    }
-
-    throw new Error(`Illegal state: ${validationErrors.join(", ")}`);
-};
