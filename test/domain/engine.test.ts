@@ -3,7 +3,6 @@ import { expect } from "@oclif/test";
 import * as sinon from "sinon";
 import SimulatorEngine from "../../src/domain/simulator-engine";
 import ReportPublisher from "../../src/domain/ports/report-publisher";
-import { Position } from "../../src/domain/model/position";
 import { Direction } from "../../src/domain/model/direction";
 
 describe("engine", () => {
@@ -31,18 +30,17 @@ describe("engine", () => {
         engine.report();
         expectCommandToBeIgnored();
 
-        const invalidPosition = { x: 5, y: 4, direction: Direction.NORTH };
-        engine.place(new Position(invalidPosition));
+        engine.place({ x: 5, y: 4, direction: Direction.NORTH });
         expectCommandToBeIgnored();
 
         const validPosition = { x: 2, y: 4, direction: Direction.NORTH };
-        engine.place(new Position(validPosition));
+        engine.place(validPosition);
         expect(engine.position).to.include(validPosition);
     });
 
     it("handles input without any MOVE, LEFT or RIGHT commands correctly", () => {
         const position = { x: 2, y: 4, direction: Direction.NORTH };
-        engine.place(new Position(position));
+        engine.place(position);
         expect(engine.position).to.include(position);
 
         engine.report();
@@ -51,7 +49,7 @@ describe("engine", () => {
 
     it("ignores move that would cause robot to fall", () => {
         const initialPosition = { x: 2, y: 4, direction: Direction.NORTH };
-        engine.place(new Position(initialPosition));
+        engine.place(initialPosition);
         expect(engine.position).to.include(initialPosition);
 
         // This move would cause the robot to fall and should be ignored
@@ -61,7 +59,7 @@ describe("engine", () => {
 
     it("handles LEFT rotation correctly", () => {
         const initialPosition = { x: 3, y: 3, direction: Direction.WEST };
-        engine.place(new Position(initialPosition));
+        engine.place(initialPosition);
         expect(engine.position).to.include(initialPosition);
 
         engine.left();
@@ -76,7 +74,7 @@ describe("engine", () => {
 
     it("handles RIGHT rotation correctly", () => {
         const initialPosition = { x: 3, y: 3, direction: Direction.WEST };
-        engine.place(new Position(initialPosition));
+        engine.place(initialPosition);
         expect(engine.position).to.include(initialPosition);
 
         engine.right();
@@ -90,7 +88,7 @@ describe("engine", () => {
     });
 
     it("moves in the correct direction for all 4 directions", () => {
-        engine.place(new Position({ x: 3, y: 3, direction: Direction.WEST }));
+        engine.place({ x: 3, y: 3, direction: Direction.WEST });
         engine.move();
         expect(engine.position).to.include({
             x: 2,

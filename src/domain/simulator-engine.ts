@@ -1,44 +1,60 @@
-import { SimulatorError, SimulatorErrorMessage } from "./errors";
-import { Position } from "./model/position";
+import { PositionProps, ValidPosition } from "./model/position";
 import ReportPublisher from "./ports/report-publisher";
 
 export default class SimulatorEngine {
-    position?: Position;
+    position?: ValidPosition;
 
     constructor(private readonly reportPublisher: ReportPublisher) {
         this.reportPublisher = reportPublisher;
     }
 
-    public place(position: Position): void {
-        this.position = position;
+    public place(position: PositionProps): void {
+        const newPosition = ValidPosition.from(position);
+        if (newPosition !== null) {
+            this.position = newPosition;
+        }
     }
 
     public move(): void {
-        this.assertInitalised();
-        this.position = this.position.withMove();
+        this.runIfInitialised((position) => {
+            const newPosition = position.withMove();
+            if (newPosition !== null) {
+                this.position = newPosition;
+            }
+        });
     }
 
     public left(): void {
-        this.assertInitalised();
-        this.position = this.position.toLeft();
+        this.runIfInitialised((position) => {
+            this.position = position.toLeft();
+        });
     }
 
     public right(): void {
-        this.assertInitalised();
-        this.position = this.position.toRight();
+        this.runIfInitialised((position) => {
+            this.position = position.toRight();
+        });
     }
 
     public report(): void {
-        this.assertInitalised();
-        const message = `${this.position.x},${this.position.y},${this.position.direction}`;
-        this.reportPublisher.publish(message);
+        this.runIfInitialised((position) => {
+            const message = `${position.x},${position.y},${position.direction}`;
+            this.reportPublisher.publish(message);
+        });
     }
 
-    private assertInitalised(): asserts this is { position: Position } {
+    /**
+     * If the engine has been initialised (i.e. this.position is not undefined or null), runs the specified callback with the value of {@link this.position}.
+     * Otherwise, skips the callback.
+     * @param callback if {@link this.position} is not undefined or null, it will be passed to this callback
+     * @returns {T}
+     */
+    private runIfInitialised<T = void>(
+        callback: (initialisedPosition: ValidPosition) => T
+    ): T | undefined {
         if (this.position === undefined || this.position === null) {
-            throw new SimulatorError(
-                SimulatorErrorMessage.POSITION_NOT_INITIALISED
-            );
+            return undefined;
         }
+        return callback(this.position);
     }
 }

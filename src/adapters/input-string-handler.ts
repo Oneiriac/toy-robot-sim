@@ -1,11 +1,10 @@
 import * as readline from "readline";
 import { Readable } from "stream";
 import { isValidDirection } from "../domain/model/direction";
-import { Position } from "../domain/model/position";
 import InputUseCase from "../domain/ports/input-use-case";
 
 import SimulatorEngine from "../domain/simulator-engine";
-import { ParseError, ParseErrorMessage } from "./parse-error";
+import ParseError from "./errors";
 
 const enum Command {
     PLACE = "PLACE",
@@ -15,33 +14,52 @@ const enum Command {
     REPORT = "REPORT",
 }
 
-function handleLine(line: string, engine: SimulatorEngine): void {
+const tryParseInteger = (value: string): number | null => {
+    if (!/^\d+$/.test(value)) {
+        return null;
+    }
+    return Number.parseInt(value, 10);
+};
+
+/**
+ * TODO: log these parse errors somewhere? (maybe when an optional debug flag is provided)
+ * @param line
+ * @param engine
+ * @returns true if line successfully parsed, or a {@link ParseError} if not successful.
+ */
+const handleLine = (
+    line: string,
+    engine: SimulatorEngine
+): true | ParseError => {
     const commandParts = line.trim().split(" ");
     const command = commandParts[0];
     if (command === undefined) {
-        throw new ParseError(ParseErrorMessage.EMPTY);
+        return ParseError.EMPTY;
     }
 
     switch (command) {
         case Command.PLACE: {
             if (commandParts.length !== 2) {
-                throw new ParseError(ParseErrorMessage.INVALID_FORMAT);
+                return ParseError.TOO_MANY_PARTS;
             }
 
             const coordinates = commandParts[1]?.split(",");
             if (coordinates.length !== 3) {
-                throw new ParseError(ParseErrorMessage.INVALID_FORMAT);
+                return ParseError.INVALID_COORDINATES_FORMAT;
             }
 
-            const x: number = parseInt(coordinates[0], 10);
-            const y: number = parseInt(coordinates[1], 10);
+            const x = tryParseInteger(coordinates[0]);
+            const y = tryParseInteger(coordinates[1]);
             const direction: string = coordinates[2];
-            if (!isValidDirection(direction)) {
-                throw new ParseError(ParseErrorMessage.INVALID_DIRECTION);
-            }
-            const initialPosition = new Position({ x, y, direction });
 
-            engine.place(initialPosition);
+            if (x === null || y === null) {
+                return ParseError.INVALID_NUMBER_FORMAT;
+            }
+            // TODO: see whether it makes sense for domain model to be here
+            if (!isValidDirection(direction)) {
+                return ParseError.INVALID_DIRECTION;
+            }
+            engine.place({ x, y, direction });
             break;
         }
 
@@ -65,9 +83,10 @@ function handleLine(line: string, engine: SimulatorEngine): void {
             break;
         }
         default:
-            throw new ParseError(ParseErrorMessage.INVALID_FORMAT);
+            return ParseError.INVALID_COMMAND;
     }
-}
+    return true;
+};
 
 export default class InputStringHandler implements InputUseCase {
     constructor(private readonly engine: SimulatorEngine) {
