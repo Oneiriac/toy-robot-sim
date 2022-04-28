@@ -10,7 +10,13 @@ export default class RunCommand extends Command {
         "Run robot simulator with input from either stdin or a text file";
 
     static examples = [
-        `$ echo "PLACE 0,1,NORTH\nREPORT" | robotsim run -s
+        `$ echo "PLACE 0,1,NORTH\\nREPORT" | robotsim run -s
+0,1,NORTH
+# input.txt contents
+# PLACE 0,0,NORTH
+# MOVE
+# REPORT
+$ robotsim run input.txt
 0,1,NORTH
 `,
     ];
