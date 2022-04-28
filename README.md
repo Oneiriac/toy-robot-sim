@@ -3,21 +3,51 @@ Toy Robot Simulator (Node.js + TypeScript)
 
 CLI app written in Node.js + TypeScript, bootstrapped with the [oclif](https://oclif.io) framework.
 
-# Usage
+# How to run the project
+```sh-session
+# Clone the git repo
+$ git clone https://github.com/Oneiriac/toy-robot-sim.git
+$ cd toy-robot-sim
+
+# Install dependencies
+$ yarn
+
+# Install to get robotsim on your PATH
+$ npm install -g .
+# Read from file
+$ robotsim run test/inputs/example-A.txt
+0,1,NORTH
+# Or read from stdin
+$ cat test/inputs/example-A.txt | robotsim run --stdin
+
+# Alternatively, run robotsim using bin/dev in the repo
+$ bin/dev run test/inputs/example-B.txt
+0,0,WEST
+
+# Run the Mocha tests in the test folder
+$ yarn test
+...
+
+# Run ESLint
+$ yarn lint
+...
+```
+
+# Usage (auto-generated)
 <!-- usage -->
 ```sh-session
 $ npm install -g toy-robot-sim
 $ robotsim COMMAND
 running command...
 $ robotsim (--version)
-toy-robot-sim/0.1.0 darwin-x64 node-v12.22.1
+toy-robot-sim/0.1.1 darwin-x64 node-v12.22.1
 $ robotsim --help [COMMAND]
 USAGE
   $ robotsim COMMAND
 ...
 ```
 <!-- usagestop -->
-# Commands
+# Commands (auto-generated)
 <!-- commands -->
 * [`robotsim help [COMMAND]`](#robotsim-help-command)
 * [`robotsim run [FILEPATH]`](#robotsim-run-filepath)
@@ -70,5 +100,5 @@ EXAMPLES
   0,1,NORTH
 ```
 
-_See code: [dist/commands/run.ts](https://github.com/Oneiriac/toy-robot-sim/blob/v0.1.0/dist/commands/run.ts)_
+_See code: [dist/commands/run.ts](https://github.com/Oneiriac/toy-robot-sim/blob/v0.1.1/dist/commands/run.ts)_
 <!-- commandsstop -->
