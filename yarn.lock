@@ -542,7 +542,7 @@
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/node/-/node-17.0.29.tgz#7f2e1159231d4a077bb660edab0fde373e375a3d"
   integrity sha512-tx5jMmMFwx7wBwq/V7OohKDVb/JwJU5qCVkeLMh1//xycAJ/ESuw9aJ9SEtlCZDYi2pBfe4JkisSoAtbOsBNAA==
 
-"@types/node@^12.20.50":
+"@types/node@12":
   version "12.20.50"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/@types/node/-/node-12.20.50.tgz#14ba5198f1754ffd0472a2f84ab433b45ee0b65e"
   integrity sha512-+9axpWx2b2JCVovr7Ilgt96uc6C1zBKOQMpGtRbWT9IoR/8ue32GGMfGA4woP8QyP2gBs6GQWEVM3tCybGCxDA==
@@ -2020,11 +2020,6 @@ fs-minipass@^2.0.0, fs-minipass@^2.1.0:
   dependencies:
     minipass "^3.0.0"
 
-fs-monkey@1.0.3:
-  version "1.0.3"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/fs-monkey/-/fs-monkey-1.0.3.tgz#ae3ac92d53bb328efe0e9a1d9541f6ad8d48e2d3"
-  integrity sha512-cybjIfiiE+pTWicSCLFHSrXZ6EilF30oh91FDP9S2B051prEa7QWfrVTQm10/dDpswBDXZugPa1Ogu8Yh+HV0Q==
-
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://packages.atlassian.com/api/npm/npm-remote/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -2981,13 +2976,6 @@ make-fetch-happen@^9.1.0:
     "@types/vinyl" "^2.0.4"
     vinyl "^2.0.1"
     vinyl-file "^3.0.0"
-
-memfs@^3.4.1:
-  version "3.4.1"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/memfs/-/memfs-3.4.1.tgz#b78092f466a0dce054d63d39275b24c71d3f1305"
-  integrity sha512-1c9VPVvW5P7I85c35zAdEr1TD5+F11IToIHIlrVIcflfnzPkJa0ZoYEoEdYDP8KgPFoSZ/opDrUsAoZWym3mtw==
-  dependencies:
-    fs-monkey "1.0.3"
 
 merge-stream@^2.0.0:
   version "2.0.0"
