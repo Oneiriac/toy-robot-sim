@@ -1,6 +1,6 @@
 {
     "name": "toy-robot-sim",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "description": "Toy Robot Simulator: Node.js/TypeScript CLI app",
     "author": "Damon Cai @Oneiriac",
     "bin": {
