@@ -35,11 +35,11 @@ function handleLine(line: string, engine: SimulatorEngine): void {
 
             const x: number = parseInt(coordinates[0], 10);
             const y: number = parseInt(coordinates[1], 10);
-            const maybeDirection = coordinates[2];
-            if (!isValidDirection(maybeDirection)) {
+            const direction: string = coordinates[2];
+            if (!isValidDirection(direction)) {
                 throw new ParseError(ParseErrorMessage.INVALID_DIRECTION);
             }
-            const initialPosition = new Position(x, y, maybeDirection);
+            const initialPosition = new Position({ x, y, direction });
 
             engine.place(initialPosition);
             break;

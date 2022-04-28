@@ -1,3 +1,4 @@
+import { SimulatorError, SimulatorErrorMessage } from "./errors";
 import { Position } from "./model/position";
 import ReportPublisher from "./ports/report-publisher";
 
@@ -35,7 +36,9 @@ export default class SimulatorEngine {
 
     private assertInitalised(): asserts this is { position: Position } {
         if (this.position === undefined || this.position === null) {
-            throw new Error("Robot position not initialised");
+            throw new SimulatorError(
+                SimulatorErrorMessage.POSITION_NOT_INITIALISED
+            );
         }
     }
 }

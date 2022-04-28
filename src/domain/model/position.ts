@@ -34,7 +34,8 @@ export class Position implements PositionProps {
 
     readonly direction: Direction;
 
-    constructor(x: number, y: number, direction: Direction) {
+    constructor(positionProps: PositionProps) {
+        const { x, y, direction } = positionProps;
         this.x = x;
         this.y = y;
         this.direction = direction;
