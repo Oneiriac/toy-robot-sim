@@ -4,6 +4,12 @@ Toy Robot Simulator (Node.js + TypeScript)
 CLI app written in Node.js + TypeScript, bootstrapped with the [oclif](https://oclif.io) framework.
 
 # How to run the project
+
+This app is tested against Node 12, 14 and 16 — please ensure that you have one of these versions installed and active when running it.
+[nvm](https://github.com/nvm-sh/nvm) is recommended as an option for managing multiple Node versions in your dev environment.
+
+This app is currently only tested on macOS and Linux, but should work on Windows (although the example usages that use stdin will probably need tweaking).
+
 ```sh-session
 # Clone the git repo
 $ git clone https://github.com/Oneiriac/toy-robot-sim.git
