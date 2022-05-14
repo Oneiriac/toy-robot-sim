@@ -10,7 +10,13 @@ describe("engine", () => {
     const publisher: ReportPublisher = {
         publish: publishStub,
     };
-    const engine = new SimulatorEngine(publisher);
+
+    let engine: SimulatorEngine;
+
+    beforeEach(() => {
+        publishStub.resetHistory();
+        engine = new SimulatorEngine(publisher);
+    });
 
     it("should discard all commands until a valid PLACE command is executed", () => {
         const expectCommandToBeIgnored = () => {
